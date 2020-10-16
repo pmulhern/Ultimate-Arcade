@@ -14,7 +14,13 @@ export const config = {
   height: 772,
   backgrounColor: 0x00000,
   scene: [Scene1, Scene2],
-  pixelArt: true
+  pixelArt: true,
+  physics: {
+    default: "arcade",
+    arcade:{
+        debug: false
+    }
+  }
 };
 
 const game = new Phaser.Game(config);
