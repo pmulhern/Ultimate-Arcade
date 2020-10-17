@@ -7,17 +7,13 @@ import Scene2 from "./phaser/Scene2.js";
 
 //console.log(App);
 
-// export const gameSettings = {
-//   playerSpeed: 200,
-// };
-
 export const config = {
   type: Phaser.AUTO,
   parent: "phaser",
   width: 800,
   height: 600,
   backgrounColor: 0x00000,
-  scene: [Scene1, Scene2],
+  scene: [Scene1, Scene2,],
   pixelArt: true,
   physics: {
     default: "arcade",
