@@ -1,63 +1,29 @@
-# Phaser 3 React Webpack Project Template
+# Create React Express App
 
-Built from the [https://github.com/photonstorm/phaser3-project-template](Phaser 3 Template), this boilerplate gives you Phaser and React out of the box. Full details on [Integrating React and Phaser 3 Tutorial](https://medium.com/@Tnodes/integrating-react-and-phaser-3-tutorial-eb96717d4a9d). 
+## About This Boilerplate
 
-ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/). Includes hot-reloading for development and production-ready builds.
+This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
 
-Loading images via JavaScript module `import` is also supported.
+The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
 
-## Quickstart
+## Starting the app locally
 
-`git clone https://github.com/nodes777/phaser3-react-template`
-`npm install`
-`npm start`
+Start by installing front and backend dependencies. While in this directory, run the following command:
 
-## Requirements
+```
+npm install
+```
 
-[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
+This should install node modules within the server and the client folder.
 
-## Available Commands
+After both installations complete, run the following command in your terminal:
 
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm start` | Build project and open web server running project |
-| `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
+```
+npm start
+```
 
-## Writing Code
+Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
 
-After cloning the repo, run `npm install` from your project directory. Then, you can start the local development
-server by running `npm start`.
+## Deployment (Heroku)
 
-
-After starting the development server with `npm start`, you can edit any files in the `src` folder
-and webpack will automatically recompile and reload your server (available at `http://localhost:8080`
-by default).
-
-## Customizing Template
-
-### Babel
-You can write modern ES6+ JavaScript and Babel will transpile it to a version of JavaScript that you
-want your project to support. The targeted browsers are set in the `.babelrc` file and the default currently
-targets all browsers with total usage over "0.25%" but excludes IE11 and Opera Mini.
-
-  ```
-  "browsers": [
-    ">0.25%",
-    "not ie 11",
-    "not op_mini all"
-  ]
-  ```
-
-### Webpack
-If you want to customize your build, such as adding a new webpack loader or plugin (i.e. for loading CSS or fonts), you can
-modify the `webpack/base.js` file for cross-project changes, or you can modify and/or create
-new configuration files and target them in specific npm tasks inside of `package.json'.
-
-## Deploying Code
-After you run the `npm run build` command, your code will be built into a single bundle located at 
-`dist/bundle.min.js` along with any other assets you project depended. 
-
-If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://mycoolserver.com`), 
-you should be able to open `http://mycoolserver.com/index.html` and play your game.
-# Ultimate-Arcade
+To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.

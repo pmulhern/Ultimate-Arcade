@@ -1,15 +1,9 @@
-import Phaser from "phaser";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App.jsx";
-import Scene1 from "./phaser/Scene1";
-import Scene2 from "./phaser/Scene2.js";
-
-//console.log(App);
-
-// export const gameSettings = {
-//   playerSpeed: 200,
-// };
+import Scene1 from "./components/Scene1";
+import Scene2 from "./components/Scene2.js";
+import registerServiceWorker from "./registerServiceWorker";
 
 export const config = {
   type: Phaser.AUTO,
@@ -30,6 +24,6 @@ export const config = {
 export const game = new Phaser.Game(config);
 
 ReactDOM.render(
-  <App />,
-  document.getElementById("root") || document.createElement("div")
-);
+<App />, 
+document.getElementById("root") || document.createElement("div"));
+registerServiceWorker();
