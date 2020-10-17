@@ -1,5 +1,6 @@
 import Phaser, { Scene } from "phaser";
 import { config } from "..";
+import Beam from "./beam";
 
 class Scene2 extends Phaser.Scene {
   constructor() {
@@ -7,7 +8,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-    // uncomment code bellow to make background scroll
+    /* uncomment code bellow to make background scrol */
     // this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
 
     this.background = this.add.image(0,0,"background");
@@ -19,13 +20,21 @@ class Scene2 extends Phaser.Scene {
     
     this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
     this.player.play("thrust");
-
-    // assinn keys so player can move
+    /* assinn keys so player can move */
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player.setCollideWorldBounds(true);
+    
+    /* this sets ships image size*/
+    // this.player.setScale(3);
+    this.ship1.setScale(3);
+    // this.ship2.setScale(2);
+    this.ship3.setScale(2);
 
-    // assign spacebar key so player can shoot (fire wheapon)
+    /* assign spacebar key so player can shoot (fire wheapon) */
     this.spacbar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    
+    /* this holds all the "beams" Instances in "Scene2"*/
+    this.projectiles = this.add.group();
     
     this.ship1.play("ship1_anim");
     this.ship2.play("ship2_anim");
@@ -70,15 +79,28 @@ class Scene2 extends Phaser.Scene {
     this.moveShip(this.ship1, 1);
     this.moveShip(this.ship2, 2);
     this.moveShip(this.ship3, 3);
-
-    this.background.tilePositionY -= 0.5;
     
     this.movePlayerManager();
-
+    
+    this.background.tilePositionY -= 0.5;
+    
     if (Phaser.Input.Keyboard.JustDown(this.spacbar)) {
+      this.shootBeam();
       console.log("Fire!");
     }
+
+    /* we iterate through each element of the projectile group to update all the beams */
+    for(var i = 0; i < this.projectiles.getChildren().length; i++){
+      var beam = this.projectiles.getChildren()[i];
+      beam.update();
+    }
+
 }
+
+  shootBeam() {
+    var beam = new Beam(this);
+    // this.beam = this.physics.add.sprite(this.player.x, this.player.y, "beam");
+  }
 
   movePlayerManager() {
     if (this.cursorKeys.left.isDown) {
