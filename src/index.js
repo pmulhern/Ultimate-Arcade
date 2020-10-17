@@ -7,11 +7,15 @@ import Scene2 from "./phaser/Scene2.js";
 
 //console.log(App);
 
+// export const gameSettings = {
+//   playerSpeed: 200,
+// };
+
 export const config = {
   type: Phaser.AUTO,
   parent: "phaser",
-  width: 756,
-  height: 772,
+  width: 800,
+  height: 600,
   backgrounColor: 0x00000,
   scene: [Scene1, Scene2],
   pixelArt: true,
@@ -23,7 +27,7 @@ export const config = {
   }
 };
 
-const game = new Phaser.Game(config);
+export const game = new Phaser.Game(config);
 
 ReactDOM.render(
   <App />,
