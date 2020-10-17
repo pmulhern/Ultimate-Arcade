@@ -7,40 +7,26 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-    // this.background = this.add.image(0,0,"background");
-    this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
+    // uncomment code bellow to make background scroll
+    // this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
+
+    this.background = this.add.image(0,0,"background");
     this.background.setOrigin(0,0);
 
-    this.ship1 = this.add.sprite(this.game.config.width/2 - 50, this.game.config.height/2, "ship");
-    this.ship2 = this.add.sprite(this.game.config.width/2, this.game.config.height/2, "ship2");
-    this.ship3 = this.add.sprite(this.game.config.width/2 + 50, this.game.config.height/2, "ship3");
+    this.ship1 = this.add.sprite(this.game.config.width / 2 - 50, this.game.config.height / 2, "ship");
+    this.ship2 = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, "ship2");
+    this.ship3 = this.add.sprite(this.game.config.width / 2 + 50, this.game.config.height / 2, "ship3");
+    
+    this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
+    this.player.play("thrust");
 
-    this.anims.create({
-        key: "ship1_anim",
-        frames: this.anims.generateFrameNumbers("ship"),
-        frameRate: 20,
-        repeat: -1
-    });
-    this.anims.create({
-        key: "ship2_anim",
-        frames: this.anims.generateFrameNumbers("ship2"),
-        frameRate: 20,
-        repeat: -1
-    });
-    this.anims.create({
-        key: "ship3_anim",
-        frames: this.anims.generateFrameNumbers("ship3"),
-        frameRate: 20,
-        repeat: -1
-    });
-    this.anims.create({
-        key: "explode",
-        frames: this.anims.generateFrameNumbers("explosion"),
-        frameRate: 20,
-        repeat: 0,
-        hideOnComplete: true
-    });
+    // assinn keys so player can move
+    this.cursorKeys = this.input.keyboard.createCursorKeys();
+    this.player.setCollideWorldBounds(true);
 
+    // assign spacebar key so player can shoot (fire wheapon)
+    this.spacbar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    
     this.ship1.play("ship1_anim");
     this.ship2.play("ship2_anim");
     this.ship3.play("ship3_anim");
@@ -52,25 +38,6 @@ class Scene2 extends Phaser.Scene {
     this.input.on('gameobjectdown', this.destroyShip, this);
 
     this.add.text(20, 20, "Playing game", {font: "25px Areial", fill: "yellow"});
-
-    this.anims.create({
-      key: "red",
-      frames: this.anims.generateFrameNumbers("power-up", {
-        start: 0,
-        end: 1
-      }),
-      frameRate: 20,
-      repeat: -1
-    });
-    this.anims.create({
-      key: "gray",
-      frames: this.anims.generateFrameNumbers("power-up", {
-        start: 2,
-        end: 3
-      }),
-      frameRate: 20,
-      repeat: -1
-    });
 
     this.physics.world.setBoundsCollision();
 
@@ -95,10 +62,8 @@ class Scene2 extends Phaser.Scene {
       // set boundaries
       powerUp.setCollideWorldBounds(true);
       // make power-ups bounce around screen
-     powerUp.setBounce(1);
-
+      powerUp.setBounce(1);
     }
-
   }
 
   update() {
@@ -107,7 +72,31 @@ class Scene2 extends Phaser.Scene {
     this.moveShip(this.ship3, 3);
 
     this.background.tilePositionY -= 0.5;
+    
+    this.movePlayerManager();
+
+    if (Phaser.Input.Keyboard.JustDown(this.spacbar)) {
+      console.log("Fire!");
+    }
 }
+
+  movePlayerManager() {
+    if (this.cursorKeys.left.isDown) {
+      this.player.setVelocityX(-200);
+    } else if (this.cursorKeys.right.isDown) {
+      this.player.setVelocityX(200);
+    } else {
+      this.player.setVelocityX(0)
+    }
+
+    if (this.cursorKeys.up.isDown) {
+      this.player.setVelocityY(-200);
+    } else if (this.cursorKeys.down.isDown) {
+      this.player.setVelocityY(200);
+    } else {
+      this.player.setVelocityY(0)
+    }
+  }
 
   moveShip(ship, speed) {
     ship.y += speed;
