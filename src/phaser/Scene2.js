@@ -1,5 +1,6 @@
 import Phaser, { Scene } from "phaser";
 import { config } from "..";
+import Beam from "./beam";
 
 class Scene2 extends Phaser.Scene {
   constructor() {
@@ -7,7 +8,7 @@ class Scene2 extends Phaser.Scene {
   }
 
   create() {
-    // uncomment code bellow to make background scroll
+    /* uncomment code bellow to make background scrol */
     // this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
 
     this.background = this.add.image(0,0,"background");
@@ -20,12 +21,23 @@ class Scene2 extends Phaser.Scene {
     this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
     this.player.play("thrust");
 
-    // assinn keys so player can move
+    /* this sets ships image size*/
+    // this.player.setScale(3);
+    this.ship1.setScale(3);
+    // this.ship2.setScale(2);
+    this.ship3.setScale(2);
+
+    /* assinn keys so player can move */
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.player.setCollideWorldBounds(true);
 
-    // assign spacebar key so player can shoot (fire wheapon)
+    /* assign spacebar key so player can shoot (fire wheapon) */
     this.spacbar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    if (Phaser.Input.Keyboard.JustDown(this.spacbar)) {
+      this.shootBeam();
+      console.log("Fire!");
+    }
     
     this.ship1.play("ship1_anim");
     this.ship2.play("ship2_anim");
@@ -75,9 +87,6 @@ class Scene2 extends Phaser.Scene {
     
     this.movePlayerManager();
 
-    if (Phaser.Input.Keyboard.JustDown(this.spacbar)) {
-      console.log("Fire!");
-    }
 }
 
   movePlayerManager() {
@@ -96,6 +105,11 @@ class Scene2 extends Phaser.Scene {
     } else {
       this.player.setVelocityY(0)
     }
+  }
+
+  shootBeam() {
+    var beam = new Beam(this);
+    var beam = this.physics.add.sprite(this.player.x, this.player.y, "beam");
   }
 
   moveShip(ship, speed) {
