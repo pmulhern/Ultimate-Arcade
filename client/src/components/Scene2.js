@@ -30,7 +30,7 @@ class Scene2 extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     
     /* this sets ships image size*/
-    this.player.setScale(2);
+    // this.player.setScale(2);
     this.ship1.setScale(3);
     // this.ship2.setScale(2);
     this.ship3.setScale(2);
