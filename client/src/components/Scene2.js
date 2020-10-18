@@ -17,6 +17,11 @@ class Scene2 extends Phaser.Scene {
     this.ship1 = this.add.sprite(this.game.config.width / 2 - 50, this.game.config.height / 2, "ship");
     this.ship2 = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, "ship2");
     this.ship3 = this.add.sprite(this.game.config.width / 2 + 50, this.game.config.height / 2, "ship3");
+
+    this.enemies = this.physics.add.group();
+    this.enemies.add(this.ship1);
+    this.enemies.add(this.ship2);
+    this.enemies.add(this.ship3);
     
     this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
     this.player.play("thrust");
@@ -25,7 +30,7 @@ class Scene2 extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     
     /* this sets ships image size*/
-    // this.player.setScale(3);
+    this.player.setScale(2);
     this.ship1.setScale(3);
     // this.ship2.setScale(2);
     this.ship3.setScale(2);
@@ -73,6 +78,33 @@ class Scene2 extends Phaser.Scene {
       // make power-ups bounce around screen
       powerUp.setBounce(1);
     }
+
+    /* this will make projectiles move the powerups when they collide*/
+    this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
+      projectile.destroy();
+    });
+
+    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+    this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+    this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+
+  }
+  /* will be able to pickup the powerups*/
+  pickPowerUp(player, powerUp) {
+    powerUp.disableBody(true, true);
+  }
+
+  /* will hurt player when collide with enemy*/
+  hurtPlayer(player, enemy) {
+    this.resetShipPos(enemy);
+    player.x = config.width / 2 -8;
+    player.y = config.height - 64;
+  }
+
+  /* projectiles will destroy ship*/
+  hitEnemy(projectile, enemy) {
+    projectile.destroy();
+    this.resetShipPos(enemy);
   }
 
   update() {
@@ -89,7 +121,7 @@ class Scene2 extends Phaser.Scene {
       console.log("Fire!");
     }
 
-    /* we iterate through each element of the projectile group to update all the beams */
+    /* this code will iterate through each element of the projectile group to update all the beams */
     for(var i = 0; i < this.projectiles.getChildren().length; i++){
       var beam = this.projectiles.getChildren()[i];
       beam.update();
