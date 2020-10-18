@@ -25,7 +25,7 @@ class Scene2 extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     
     /* this sets ships image size*/
-    // this.player.setScale(3);
+    this.player.setScale(2);
     this.ship1.setScale(3);
     // this.ship2.setScale(2);
     this.ship3.setScale(2);
@@ -73,6 +73,10 @@ class Scene2 extends Phaser.Scene {
       // make power-ups bounce around screen
       powerUp.setBounce(1);
     }
+    this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
+      projectile.destroy();
+    });
+
   }
 
   update() {
@@ -89,7 +93,7 @@ class Scene2 extends Phaser.Scene {
       console.log("Fire!");
     }
 
-    /* we iterate through each element of the projectile group to update all the beams */
+    /* this code will iterate through each element of the projectile group to update all the beams */
     for(var i = 0; i < this.projectiles.getChildren().length; i++){
       var beam = this.projectiles.getChildren()[i];
       beam.update();
