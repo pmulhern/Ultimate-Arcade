@@ -4,8 +4,8 @@ class Scene1 extends Phaser.Scene {
   constructor() {
     super("bootGame");
   }
-  preload() {
-    this.load.image("background", "/src/assets/images/background.png");
+  preload() { 
+    this.load.image("background", "/src/assets/images/background.jpg   ");
     this.load.spritesheet("ship", "/src/assets/spritesheets/ship.png",{
       frameWidth: 16,
       frameHeight: 16
@@ -27,12 +27,12 @@ class Scene1 extends Phaser.Scene {
       frameHeight: 16
     });
     this.load.spritesheet("player", "/src/assets/spritesheets/player.png",{
-      frameWidth: 16,
-      frameHeight: 24
+      frameWidth: 70 ,
+      frameHeight: 113
     });
     this.load.spritesheet("beam", "/src/assets/spritesheets/beam.png",{
-      frameWidth: 16,
-      frameHeight: 16
+      frameWidth: 13 ,
+      frameHeight: 28
     });
   }
   create() {
