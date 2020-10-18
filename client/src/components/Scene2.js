@@ -77,6 +77,12 @@ class Scene2 extends Phaser.Scene {
       projectile.destroy();
     });
 
+    this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+
+  }
+
+  pickPowerUp(player, powerUp) {
+    powerUp.disableBody(true, true);
   }
 
   update() {
