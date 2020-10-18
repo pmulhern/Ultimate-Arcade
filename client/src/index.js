@@ -8,15 +8,16 @@ import registerServiceWorker from "./registerServiceWorker";
 export const config = {
   type: Phaser.AUTO,
   parent: "phaser",
-  width: 800,
-  height: 600,
+  width: 1280,
+  height: 720,
   backgrounColor: 0x00000,
   scene: [Scene1, Scene2],
   pixelArt: true,
   physics: {
     default: "arcade",
     arcade:{
-        debug: false
+        debug: false,
+        debugShowVelocity: false
     }
   }
 };

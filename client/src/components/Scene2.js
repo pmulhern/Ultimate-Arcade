@@ -30,7 +30,7 @@ class Scene2 extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     
     /* this sets ships image size*/
-    this.player.setScale(2);
+    // this.player.setScale(2);
     this.ship1.setScale(3);
     // this.ship2.setScale(2);
     this.ship3.setScale(2);
@@ -51,7 +51,7 @@ class Scene2 extends Phaser.Scene {
 
     this.input.on('gameobjectdown', this.destroyShip, this);
 
-    this.add.text(20, 20, "Playing game", {font: "25px Areial", fill: "yellow"});
+    // this.add.text(20, 20, "Playing game", {font: "25px Areial", fill: "yellow"});
 
     this.physics.world.setBoundsCollision();
 
@@ -88,6 +88,12 @@ class Scene2 extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
     this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
 
+    var graphics = this.add.graphics();
+    graphics.fillStyle("Black");
+    graphics.fillRect(0,0,config.width,20);
+
+    this.score = 0;
+    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE", 16);
   }
   /* will be able to pickup the powerups*/
   pickPowerUp(player, powerUp) {
@@ -105,7 +111,19 @@ class Scene2 extends Phaser.Scene {
   hitEnemy(projectile, enemy) {
     projectile.destroy();
     this.resetShipPos(enemy);
+    this.score += 15;
+    
+    var scoreFormated = this.zeroPad(this.score, 6);
+    this.scoreLabel.text = "SCORE " + scoreFormated;
   }
+
+  zeroPad(number, size){
+    var stringNumber = String(number);
+    while(stringNumber.length < (size || 2)){
+      stringNumber = "0" + stringNumber;
+    }
+    return stringNumber;
+}
 
   update() {
     this.moveShip(this.ship1, 1);
