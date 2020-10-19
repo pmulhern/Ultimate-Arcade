@@ -1,6 +1,7 @@
 import Phaser, { Scene } from "phaser";
 import { config } from "..";
 import Beam from "./beam";
+import Explosion from "./explosion";
 
 class Scene2 extends Phaser.Scene {
   constructor() {
@@ -103,12 +104,54 @@ class Scene2 extends Phaser.Scene {
   /* will hurt player when collide with enemy*/
   hurtPlayer(player, enemy) {
     this.resetShipPos(enemy);
-    player.x = config.width / 2 -8;
-    player.y = config.height - 64;
+    
+    if(this.player.alpha < 1){
+      return;
+  }
+
+  // spawn a explosion animation
+  var explosion = new Explosion(this, player.x, player.y);
+
+  // disable the player and hide it
+  player.disableBody(true, true);
+
+  // after a time enable the player again
+  this.time.addEvent({
+    delay: 1000,
+    callback: this.resetPlayer,
+    callbackScope: this,
+    loop: false
+  });
+  }
+
+  resetPlayer(){
+    // enable the player again
+    var x = config.width / 2 - 8;
+    var y = config.height + 64;
+    this.player.enableBody(true, x, y, true, true);
+
+    // make the player transparent to indicate invulnerability
+    this.player.alpha = 0.5;
+
+    // move the ship from outside the screen to its original position
+    var tween = this.tweens.add({
+      targets: this.player,
+      y: config.height - 64,
+      ease: 'Power1',
+      duration: 1500,
+      repeat:0,
+      onComplete: function(){
+        this.player.alpha = 1;
+      },
+      callbackScope: this
+    });
   }
 
   /* projectiles will destroy ship*/
   hitEnemy(projectile, enemy) {
+    
+    var explosion = new Explosion(this, enemy.x, enemy.y);
+    
     projectile.destroy();
     this.resetShipPos(enemy);
     this.score += 15;
@@ -135,7 +178,9 @@ class Scene2 extends Phaser.Scene {
     this.background.tilePositionY -= 0.5;
     
     if (Phaser.Input.Keyboard.JustDown(this.spacbar)) {
-      this.shootBeam();
+      if(this.player.active){
+        this.shootBeam();
+      }
       console.log("Fire!");
     }
 
