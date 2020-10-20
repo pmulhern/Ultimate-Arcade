@@ -15,9 +15,9 @@ class Scene2 extends Phaser.Scene {
     this.background = this.add.image(0,0,"background");
     this.background.setOrigin(0,0);
 
-    this.ship1 = this.add.sprite(this.game.config.width / 2 - 50, this.game.config.height / 2, "ship");
-    this.ship2 = this.add.sprite(this.game.config.width / 2, this.game.config.height / 2, "ship2");
-    this.ship3 = this.add.sprite(this.game.config.width / 2 + 50, this.game.config.height / 2, "ship3");
+    this.ship1 = this.add.sprite(this.game.config.width / 2 - 125, this.game.config.height / 3, "ship");
+    this.ship2 = this.add.sprite(this.game.config.width / 2 + 100, this.game.config.height / 6, "ship2");
+    this.ship3 = this.add.sprite(this.game.config.width / 2 + 200, this.game.config.height / 9, "ship3");
 
     this.enemies = this.physics.add.group();
     this.enemies.add(this.ship1);
@@ -32,9 +32,9 @@ class Scene2 extends Phaser.Scene {
     
     /* this sets ships image size*/
     // this.player.setScale(2);
-    this.ship1.setScale(3);
+    // this.ship1.setScale(3);
     // this.ship2.setScale(2);
-    this.ship3.setScale(2);
+    // this.ship3.setScale(2);
 
     /* assign spacebar key so player can shoot (fire wheapon) */
     this.spacbar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -95,10 +95,30 @@ class Scene2 extends Phaser.Scene {
 
     this.score = 0;
     this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE", 16);
+
+    this.beamSound = this.sound.add("audio_beam");
+    this.explosionSound = this.sound.add("audio_explosion");
+    this.pickupSound = this.sound.add("audio_pickup");
+
+    this.music =this.sound.add("music");
+
+    var musicConfig = {
+      mute: false,
+      volume: 1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    }
+    this.music.play(musicConfig);
+
   }
   /* will be able to pickup the powerups*/
   pickPowerUp(player, powerUp) {
     powerUp.disableBody(true, true);
+
+    this.pickupSound.play();
   }
 
   /* will hurt player when collide with enemy*/
@@ -122,6 +142,8 @@ class Scene2 extends Phaser.Scene {
     callbackScope: this,
     loop: false
   });
+
+  this.explosionSound.play();
   }
 
   resetPlayer(){
@@ -158,6 +180,8 @@ class Scene2 extends Phaser.Scene {
     
     var scoreFormated = this.zeroPad(this.score, 6);
     this.scoreLabel.text = "SCORE " + scoreFormated;
+
+    this.explosionSound.play();
   }
 
   zeroPad(number, size){
@@ -194,7 +218,7 @@ class Scene2 extends Phaser.Scene {
 
   shootBeam() {
     var beam = new Beam(this);
-    // this.beam = this.physics.add.sprite(this.player.x, this.player.y, "beam");
+    this.beamSound.play();
   }
 
   movePlayerManager() {
