@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Phaser from "phaser";
 import background from "../assets/images/background.jpg";
 import player from "../assets/spritesheets/player.png";
@@ -25,8 +25,8 @@ export const Game = () => {
 
     const config = {
       type: Phaser.AUTO,
-    width: 1280,
-    height: 720,
+      width: 1280,
+      height: 720,
       backgrounColor: 0x00000,
       pixelArt: true,
       physics: {
@@ -46,7 +46,7 @@ export const Game = () => {
         // zeroPad: zeroPad,
         update: update,
       },
-      scale: { parent: 'mygame', autoCenter: Phaser.Scale.CENTER_BOTH }
+      scale: { parent: "mygame", autoCenter: Phaser.Scale.CENTER_BOTH },
     };
 
     // Create the game with our config values
@@ -128,7 +128,7 @@ export const Game = () => {
       // this.enemies.add(this.ship2);
       this.enemies.add(this.ship3);
 
-// ANIMATION STARTS HERE
+      // ANIMATION STARTS HERE
       this.anims.create({
         key: "ship1_anim",
         frames: this.anims.generateFrameNumbers("ship"),
@@ -184,7 +184,7 @@ export const Game = () => {
         frameRate: 20,
         repeat: -1,
       });
-// ANIMATION ENDS HERE
+      // ANIMATION ENDS HERE
 
       this.ship1.play("ship1_anim");
       // this.ship2.play("ship2_anim");
