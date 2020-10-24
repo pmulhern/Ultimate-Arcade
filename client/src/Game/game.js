@@ -10,7 +10,7 @@ import beamaudio from "../assets/sounds/beam.ogg";
 import font from "../assets/font/font.png";
 import fnt from "../assets/font/font.fnt";
 import pickup from "../assets/sounds/pickup.ogg";
-import Beam from "./beam";
+import Beam from "./Beam";
 // import Explosion from "./explosion";
 
 // ***PROBLEM FILES***
