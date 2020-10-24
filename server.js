@@ -1,19 +1,22 @@
-const express = require("express");
-const path = require("path");
-const PORT = process.env.PORT || 3001;
+const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
+app.use(cookieParser());
+app.use(express.json())
+const PORT = process.env.PORT || 5000;
 
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/arcade", {
+       useNewUrlParser: true,
+       useUnifiedTopology: true,
+       useCreateIndex: true
+})
+.then(() => console.log("MongoDB successfully connected!!"))
+.catch(err => console.log(err));
 
-// Send every request to the React app
-// Define any API routes before this runs
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+const userRouter = require('./routes/User');
+app.use('/user',userRouter)
 
 app.listen(PORT, function() {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
-});
+    console.log(`🌎 ==> API server now on port ${PORT}!`);
+  });

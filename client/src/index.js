@@ -1,30 +1,12 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App.jsx";
-import Scene1 from "./components/Scene1";
-import Scene2 from "./components/Scene2.js";
-import registerServiceWorker from "./registerServiceWorker";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+import AuthProvider from './Context/AuthContext';
 
-export const config = {
-  type: Phaser.AUTO,
-  parent: "phaser",
-  width: 1280,
-  height: 720,
-  backgrounColor: 0x00000,
-  scene: [Scene1, Scene2],
-  pixelArt: true,
-  physics: {
-    default: "arcade",
-    arcade:{
-        debug: false,
-        debugShowVelocity: false
-    }
-  }
-};
+ReactDOM.render(<AuthProvider> <App /> </AuthProvider>,document.getElementById('root'));
 
-export const game = new Phaser.Game(config);
-
-ReactDOM.render(
-<App />, 
-document.getElementById("root") || document.createElement("div"));
-registerServiceWorker();
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+// serviceWorker.unregister();
