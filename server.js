@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === "production") {
 }
 app.use("/user", userRouter);
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/arcade", {
+  .connect(process.env.MONGODB_URI || "mongodb+srv://Millgolb36:J6hcvWc8XBjBak8@cluster0.2jlkx.mongodb.net/ultimate-arcade?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
