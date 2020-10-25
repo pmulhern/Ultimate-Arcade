@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Phaser from "phaser";
 import background from "../assets/images/background.jpg";
 import player from "../assets/spritesheets/player.png";
@@ -10,7 +10,7 @@ import beamaudio from "../assets/sounds/beam.ogg";
 import font from "../assets/font/font.png";
 import fnt from "../assets/font/font.fnt";
 import pickup from "../assets/sounds/pickup.ogg";
-import Beam from "./Beam";
+// import Beam from "./Beam";
 // import Explosion from "./explosion";
 
 // ***PROBLEM FILES***
@@ -256,15 +256,15 @@ export const Game = () => {
       this.explosionSound = this.sound.add("audio_explosion");
       this.pickupSound = this.sound.add("audio_pickup");
       // this.music = this.sound.add("music");
-      var musicConfig = {
-        mute: false,
-        volume: 1,
-        rate: 1,
-        detune: 0,
-        seek: 0,
-        loop: false,
-        delay: 0,
-      };
+      // var musicConfig = {
+      //   mute: false,
+      //   volume: 1,
+      //   rate: 1,
+      //   detune: 0,
+      //   seek: 0,
+      //   loop: false,
+      //   delay: 0,
+      // };
       // this.music.play(musicConfig);
     }
 
@@ -277,7 +277,7 @@ export const Game = () => {
         }
 
         // spawn a explosion animation
-        var explosion = new Explosion(this, player.x, player.y);
+        // var explosion = new Explosion(this, player.x, player.y);
 
         // disable the player and hide it
         player.disableBody(true, true);
@@ -303,17 +303,17 @@ export const Game = () => {
         this.player.alpha = 0.5;
 
         // move the ship from outside the screen to its original position
-        var tween = this.tweens.add({
-          targets: this.player,
-          y: config.height - 64,
-          ease: "Power1",
-          duration: 1500,
-          repeat: 0,
-          onComplete: function () {
-            this.player.alpha = 1;
-          },
-          callbackScope: this,
-        });
+        //  var tween = this.tweens.add({
+        //   targets: this.player,
+        //   y: config.height - 64,
+        //   ease: "Power1",
+        //   duration: 1500,
+        //   repeat: 0,
+        //   onComplete: function () {
+        //     this.player.alpha = 1;
+        //   },
+        //   callbackScope: this,
+        // });
       };
 
       this.zeroPad = function (number, size) {
@@ -332,7 +332,7 @@ export const Game = () => {
         }
 
         // spawn a explosion animation
-        var explosion = new Explosion(this, player.x, player.y);
+        // var explosion = new Explosion(this, player.x, player.y);
 
         // disable the player and hide it
         player.disableBody(true, true);
@@ -355,7 +355,7 @@ export const Game = () => {
       };
 
       this.hitEnemy = function (projectile, enemy) {
-        var explosion = new Explosion(this, enemy.x, enemy.y);
+        // var explosion = new Explosion(this, enemy.x, enemy.y);
 
         projectile.destroy();
         this.resetShipPos(enemy);
