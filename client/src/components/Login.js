@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import AuthService from "../services/AuthService";
+import AuthService from "../Services/AuthService";
 import Message from "./Message";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../Context/AuthContext";
 // import { useHistory } from 'react-router-dom';
 
 const Login = (props) => {
