@@ -5,9 +5,9 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import Admin from "./components/Admin";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PrivateRoute from "./Hocs/PrivateRoute";
-import UnPrivateRoute from "./Hocs/UnPrivateRoute";
-import { Game } from "./Game/Game";
+import PrivateRoute from "./hocs/PrivateRoute";
+import UnPrivateRoute from "./hocs/UnPrivateRoute";
+import { Game } from "./game/Game";
 
 function App() {
   return (
