@@ -7,7 +7,7 @@ import Admin from "./components/Admin";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./hocs/PrivateRoute";
 import UnPrivateRoute from "./hocs/UnPrivateRoute";
-import { Game } from "./game/Game";
+import { Game } from "./Game/Game";
 
 function App() {
   return (
