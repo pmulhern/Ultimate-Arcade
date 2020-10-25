@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "./Components/Navbar";
-import Login from "./Components/Login";
-import Home from "./Components/Home";
-import Register from "./Components/Register";
-import Admin from "./Components/Admin";
+import Navbar from "./components/Navbar";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Register from "./components/Register";
+import Admin from "./components/Admin";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PrivateRoute from "./hocs/PrivateRoute";
-import UnPrivateRoute from "./hocs/UnPrivateRoute";
+import PrivateRoute from "./Hocs/PrivateRoute";
+import UnPrivateRoute from "./Hocs/UnPrivateRoute";
 import { Game } from "./Game/Game";
 
 function App() {
