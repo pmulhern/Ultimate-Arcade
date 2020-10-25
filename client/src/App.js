@@ -9,6 +9,7 @@ import PrivateRoute from "./hocs/PrivateRoute";
 import UnPrivateRoute from "./hocs/UnPrivateRoute";
 import { Game } from "./Game/game";
 
+
 function App() {
   return (
     <Router>
