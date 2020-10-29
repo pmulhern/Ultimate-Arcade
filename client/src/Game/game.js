@@ -41,9 +41,10 @@ export const Game = () => {
       scene: {
         preload: preload,
         create: create,
+        create2: create2,
         // pickPowerUp: pickPowerUp,
-        // hurtPlayer: hurtPlayer,
-        // resetPlayer: resetPlayer,
+        hurtPlayer: hurtPlayer,
+        resetPlayer: resetPlayer,
         // hitEnemy: hitEnemy,
         // zeroPad: zeroPad,
         update: update,
@@ -102,18 +103,7 @@ export const Game = () => {
       // this.scene.start("playGame")
       this.background = this.add.image(0, 0, "background");
       this.background.setOrigin(0, 0);
-      this.player = this.physics.add.sprite(
-        this.game.config.width / 2 - 8,
-        this.game.config.height - 64,
-        "player"
-      );
-      this.player.play("thrust");
-      this.cursorKeys = this.input.keyboard.createCursorKeys();
-      this.player.setCollideWorldBounds(true);
-      this.spacbar = this.input.keyboard.addKey(
-        Phaser.Input.Keyboard.KeyCodes.SPACE
-      );
-      this.projectiles = this.add.group();
+     
       this.ship1 = this.add.sprite(
         this.game.config.width / 2 - 125,
         this.game.config.height / 3,
@@ -125,12 +115,120 @@ export const Game = () => {
         this.game.config.height / 9,
         "ship3"
       );
+
       this.enemies = this.physics.add.group();
       this.enemies.add(this.ship1);
       // this.enemies.add(this.ship2);
       this.enemies.add(this.ship3);
 
-      // ANIMATION STARTS HERE
+      this.player = this.physics.add.sprite(
+        this.game.config.width / 2 - 8,
+        this.game.config.height - 64,
+        "player"
+      );
+      this.player.play("thrust");
+      this.cursorKeys = this.input.keyboard.createCursorKeys();
+      this.player.setCollideWorldBounds(true);
+
+      this.spacbar = this.input.keyboard.addKey(
+        Phaser.Input.Keyboard.KeyCodes.SPACE
+      );
+      this.projectiles = this.add.group();
+
+      this.ship1.play("ship1_anim");
+      // this.ship2.play("ship2_anim");
+      this.ship3.play("ship3_anim");
+
+      this.ship1.setInteractive();
+      // this.ship2.setInteractive();
+      this.ship3.setInteractive();
+      this.input.on("gameobjectdown", this.destroyShip, this);
+      
+      this.add.text(20, 20, "Playing game", {
+        font: "25px Areial",
+        fill: "yellow",
+      });
+
+      this.physics.world.setBoundsCollision();
+
+      this.powerUps = this.physics.add.group();
+
+      var maxObjects = 4;
+      for (var i = 0; i <= maxObjects; i++) {
+        var powerUp = this.physics.add.sprite(16, 16, "power-up");
+        this.powerUps.add(powerUp);
+        powerUp.setRandomPosition(
+          0,
+          0,
+          this.game.config.width,
+          this.game.config.height
+        );
+
+        // set random animation
+        // if (Math.random() > 0.5) {
+        //   powerUp.play("red");
+        // } else {
+        //   powerUp.play("gray");
+        // }
+
+        // setVelocity
+        powerUp.setVelocity(100, 100);
+        // set boundaries
+        powerUp.setCollideWorldBounds(true);
+        // make power-ups bounce around screen
+        powerUp.setBounce(1);
+      }
+        this.physics.add.collider(this.projectiles, this.powerUps, function (
+          projectile,
+          powerUp
+        ) {
+          projectile.destroy();
+        });
+        this.physics.add.overlap(
+          this.player,
+          this.powerUps,
+          this.pickPowerUp,
+          null,
+          this
+        );
+        this.physics.add.overlap(
+          this.player,
+          this.enemies,
+          this.hurtPlayer,
+          null,
+          this
+        );
+        this.physics.add.overlap(
+          this.projectiles,
+          this.enemies,
+          this.hitEnemy,
+          null,
+          this
+        );
+
+        var graphics = this.add.graphics();
+        graphics.fillStyle("Black");
+        graphics.fillRect(0, 0, config.width, 20);
+        this.score = 0;
+        this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE", 16);
+        this.beamSound = this.sound.add("audio_beam");
+        this.explosionSound = this.sound.add("audio_explosion");
+        this.pickupSound = this.sound.add("audio_pickup");
+        // this.music = this.sound.add("music");
+        // var musicConfig = {
+        //   mute: false,
+        //   volume: 1,
+        //   rate: 1,
+        //   detune: 0,
+        //   seek: 0,
+        //   loop: false,
+        //   delay: 0,
+        // };
+        // this.music.play(musicConfig);
+      }
+
+    function create2(){
+
       this.anims.create({
         key: "ship1_anim",
         frames: this.anims.generateFrameNumbers("ship"),
@@ -186,137 +284,61 @@ export const Game = () => {
         frameRate: 20,
         repeat: -1,
       });
-      // ANIMATION ENDS HERE
-
-      this.ship1.play("ship1_anim");
-      // this.ship2.play("ship2_anim");
-      this.ship3.play("ship3_anim");
-      this.ship1.setInteractive();
-      // this.ship2.setInteractive();
-      this.ship3.setInteractive();
-      this.physics.world.setBoundsCollision();
-      // this.input.on('gameobjectdown', this.destroyShip, this);
-      this.powerUps = this.physics.add.group();
-      var maxObjects = 4;
-      for (var i = 0; i <= maxObjects; i++) {
-        var powerUp = this.physics.add.sprite(16, 16, "power-up");
-        this.powerUps.add(powerUp);
-        powerUp.setRandomPosition(
-          0,
-          0,
-          this.game.config.width,
-          this.game.config.height
-        );
-
-        // set random animation
-        // if (Math.random() > 0.5) {
-        //   powerUp.play("red");
-        // } else {
-        //   powerUp.play("gray");
-        // }
-
-        // setVelocity
-        powerUp.setVelocity(100, 100);
-        // set boundaries
-        powerUp.setCollideWorldBounds(true);
-        // make power-ups bounce around screen
-        powerUp.setBounce(1);
-      }
-      this.physics.add.collider(this.projectiles, this.powerUps, function (
-        projectile,
-        powerUp
-      ) {
-        projectile.destroy();
-      });
-      this.physics.add.overlap(
-        this.player,
-        this.powerUps,
-        this.pickPowerUp,
-        null,
-        this
-      );
-      this.physics.add.overlap(
-        this.player,
-        this.enemies,
-        this.hurtPlayer,
-        null,
-        this
-      );
-      this.physics.add.overlap(
-        this.projectiles,
-        this.enemies,
-        this.hitEnemy,
-        null,
-        this
-      );
-      var graphics = this.add.graphics();
-      graphics.fillStyle("Black");
-      graphics.fillRect(0, 0, config.width, 20);
-      this.score = 0;
-      this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE", 16);
-      this.beamSound = this.sound.add("audio_beam");
-      this.explosionSound = this.sound.add("audio_explosion");
-      this.pickupSound = this.sound.add("audio_pickup");
-      // this.music = this.sound.add("music");
-      // var musicConfig = {
-      //   mute: false,
-      //   volume: 1,
-      //   rate: 1,
-      //   detune: 0,
-      //   seek: 0,
-      //   loop: false,
-      //   delay: 0,
-      // };
-      // this.music.play(musicConfig);
     }
+      // ANIMATION ENDS HER
+
+
+     function hurtPlayer(player, enemy) {
+      this.resetShipPos(enemy);
+
+      if (this.player.alpha < 1) {
+        return;
+      }
+
+      // spawn a explosion animation
+      // var explosion = new Explosion(this, player.x, player.y);
+
+      // disable the player and hide it
+      player.disableBody(true, true);
+
+      // after a time enable the player again
+      this.time.addEvent({
+        delay: 1000,
+        callback: this.resetPlayer,
+        callbackScope: this,
+        loop: false,
+      });
+
+      this.explosionSound.play();
+    };
+
+    function resetPlayer  () {
+      // enable the player again
+      var x = config.width / 2 - 8;
+      var y = config.height + 64;
+      this.player.enableBody(true, x, y, true, true);
+
+      // make the player transparent to indicate invulnerability
+      this.player.alpha = 0.5;
+
+      // move the ship from outside the screen to its original position
+      //  var tween = this.tweens.add({
+      //   targets: this.player,
+      //   y: config.height - 64,
+      //   ease: "Power1",
+      //   duration: 1500,
+      //   repeat: 0,
+      //   onComplete: function () {
+      //     this.player.alpha = 1;
+      //   },
+      //   callbackScope: this,
+      // });
+    };
 
     function update() {
-      this.hurtPlayer = function (player, enemy) {
-        this.resetShipPos(enemy);
+  
 
-        if (this.player.alpha < 1) {
-          return;
-        }
-
-        // spawn a explosion animation
-        // var explosion = new Explosion(this, player.x, player.y);
-
-        // disable the player and hide it
-        player.disableBody(true, true);
-
-        // after a time enable the player again
-        this.time.addEvent({
-          delay: 1000,
-          callback: this.resetPlayer,
-          callbackScope: this,
-          loop: false,
-        });
-
-        this.explosionSound.play();
-      };
-
-      this.resetPlayer = function () {
-        // enable the player again
-        var x = config.width / 2 - 8;
-        var y = config.height + 64;
-        this.player.enableBody(true, x, y, true, true);
-
-        // make the player transparent to indicate invulnerability
-        this.player.alpha = 0.5;
-
-        // move the ship from outside the screen to its original position
-        //  var tween = this.tweens.add({
-        //   targets: this.player,
-        //   y: config.height - 64,
-        //   ease: "Power1",
-        //   duration: 1500,
-        //   repeat: 0,
-        //   onComplete: function () {
-        //     this.player.alpha = 1;
-        //   },
-        //   callbackScope: this,
-        // });
-      };
+      
 
       this.zeroPad = function (number, size) {
         var stringNumber = String(number);
