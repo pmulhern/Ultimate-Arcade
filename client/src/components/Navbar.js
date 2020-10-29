@@ -20,13 +20,13 @@ const Navbar = (props) => {
     return (
       <>
         <Link to="/">
-          <li className="nav-item nav-link">Home</li>
+          <li style={{color: "orange"}} className="nav-item nav-link">Home</li>
         </Link>
         <Link to="/login">
-          <li className="nav-item nav-link">Login</li>
+          <li style={{color: "pink"}} className="nav-item nav-link">Login</li>
         </Link>
         <Link to="/register">
-          <li className="nav-item nav-link">Register</li>
+          <li style={{color: "gold"}} className="nav-item nav-link">Register</li>
         </Link>
       </>
     );
@@ -36,10 +36,10 @@ const Navbar = (props) => {
     return (
       <>
         <Link to="/home">
-          <li className="nav-item nav-link">Home</li>
+          <li style={{color: "orange"}} className="nav-item nav-link">Home</li>
         </Link>
         <Link to="/game">
-          <li className="nav-item nav-link">Play Game</li>
+          <li style={{color: "pink"}} className="nav-item nav-link">Play Game</li>
         </Link>
 
         {user.role === "admin" ? (
@@ -48,7 +48,7 @@ const Navbar = (props) => {
           </Link>
         ) : null}
         <Link to="/">
-          <button
+          <button style={{color: "gold"}}
             type="button"
             className="btn btn-link nav-item nav-link"
             onClick={onClickLogoutHandler}
@@ -60,9 +60,9 @@ const Navbar = (props) => {
     );
   };
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light">
       <Link to="/">
-        <div className="navbar-brand">GamePortal</div>
+        <div style={{color: "yellow"}} className="navbar-brand">GamePortal</div>
       </Link>
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto">
