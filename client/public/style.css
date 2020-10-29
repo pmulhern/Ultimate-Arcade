@@ -1,4 +1,20 @@
 body {
-    background-image: url(./images/background.png);
+    background-image: url(./arcadeWallpaper.jpg);
     background-size: cover;
     }
+
+@font-face {
+        font-family: 'Arcade';
+        src: url('./ARCADECLASSIC.TTF') format('truetype');
+      }
+
+nav {
+    font-family: "Arcade";
+    background-color: rgba(255, 255, 255, 0.37);
+    border: rgb(0, 252, 0) solid 2px;
+}
+
+#home {
+    font-family: 'Arcade';
+    color: rgba(251, 255, 0, 0.521);
+}
