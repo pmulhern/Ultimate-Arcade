@@ -5,12 +5,11 @@
 [![License](https://img.shields.io/github/repo-size/ram-sah/Project-2?logo=gitHub)](https://github.com/pmulhern/Ultimate-Arcade)
 
 ## Description: 
-Users can log into an account and have the option to pick a game.  Instead of closing applications and reloading new applications, users can simply return to the game gallery and select a new game to play.
+The concept of our application was born out of our collective passion for gaming and development.  In this application, users will be able to create an account and play games to pass time or compete for top scores against a group of friends.  
 
-New games would be added on some time interval set basis.  For example, every month we would strive to add a new game to the portal.
-As the application matures and user registration increases, future development would include the users ability to actively participate or providing feedback on new features, new games and enhancements they would like added.  This would keep users engaged, returning to the application and potentially draw new users as the option grow.    
+New games will be added on a regular basis to be determined.  For example, every month we would strive to add a new game to the portal.
 
-Gaming customization/ user participation in the design process is a big part of today’s console environment.  The goal of this future development is to provide a similar experience.  
+As the application matures and user registration increases, future development would also include the users ability to actively participate or provide feedback on new features, new games and enhancements they would like added.  This would help keep users engaged and consistently return to the application.  Gaming customization/ user participation in the design process is a big part of today’s console environment.  The goal of this future development is to provide a similar experience.  
 
 ## Table of Contents
        
