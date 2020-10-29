@@ -20,6 +20,8 @@ import pickup from "../assets/sounds/pickup.ogg";
 
 export const Game = () => {
   useEffect(() => {
+
+    window.loadBackground();
     // Our game scene
     // var scene = new Phaser.Scene("game");
 
