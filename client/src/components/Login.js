@@ -29,7 +29,7 @@ const Login = (props) => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <h3>Please sign in</h3>
+        <h3 style={{color: "wheat"}}>Please sign in</h3>
         <label htmlFor="username" className="sr-only">
           Username:{" "}
         </label>
