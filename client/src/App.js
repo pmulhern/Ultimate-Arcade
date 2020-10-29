@@ -19,7 +19,7 @@ function App() {
         <UnPrivateRoute path="/register" component={Register} />
         <PrivateRoute path="/admin" roles={["admin"]} component={Admin} />
         <PrivateRoute path="/home" roles={["user", "admin"]} component={Home} />
-        <PrivateRoute exact path="/Game" roles={["user", "admin",]} component={Game} />
+        <PrivateRoute exact path="/Game" roles={["user", "admin"]} component={Game} />
       </Switch>
     </Router>
   );
